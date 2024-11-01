@@ -22,7 +22,7 @@ const About = () => {
           <h3 className="text-xl sm:text-2xl md:text-3xl text-orange-500 font-bold">
             About US
           </h3>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold pb-3 sm:pb-4 md:pb-5 lg:pb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold pb-3 sm:pb-4 md:pb-5 lg:pb-8">
             We are qualified & of experience in this field
           </h1>
           <p className="pb-2 sm:pb-3.5 md:pb-5 leading-7 md:leading-8">
