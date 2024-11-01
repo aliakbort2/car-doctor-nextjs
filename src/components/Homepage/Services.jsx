@@ -2,8 +2,6 @@ import { services } from "@/lib/services";
 import ServicesCard from "../cards/ServicesCard";
 
 const Services = () => {
-  //   console.log(services);
-
   return (
     <div>
       <div className="text-center mt-4">
@@ -19,7 +17,7 @@ const Services = () => {
           believable.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:mt-16 max-w-screen-xl mx-auto px-1 sm:px-2 md:px-2.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-8 sm:mt-10 md:mt-12 lg:mt-16 max-w-screen-xl mx-auto px-2 sm:px-2.5 md:px-3">
         {services.map((service) => (
           <ServicesCard key={service._id} service={service}></ServicesCard>
         ))}
