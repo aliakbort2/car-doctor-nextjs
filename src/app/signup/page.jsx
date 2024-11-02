@@ -2,18 +2,38 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const SignUp = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
   const handleSignUp = async (event) => {
     event.preventDefault();
 
-    const form = event.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const password = form.password.value;
+    const newUser = {
+      name: event.target.name.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
 
-    console.log(name, email, password);
+    const resp = await fetch("http://localhost:3000/signup/api", {
+      method: "POST",
+      body: JSON.stringify(newUser),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    console.log(resp);
+    if (resp.status === 200) {
+      event.target.reset();
+    }
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
 
   return (
     <div>

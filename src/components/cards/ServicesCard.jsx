@@ -4,7 +4,7 @@ import Image from "next/image";
 const ServicesCard = ({ service }) => {
   const { _id, title, img, price } = service;
   return (
-    <div className="bg-base-100 shadow hover:shadow-md hover:transition-all hover:duration-700 hover:rounded cursor-pointer p-5">
+    <div className="bg-base-100 shadow hover:shadow-md hover:transition-all hover:duration-700 cursor-pointer p-5">
       <div className="h-60 w-full">
         <Image
           src={img}

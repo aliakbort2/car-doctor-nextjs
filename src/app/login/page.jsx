@@ -2,18 +2,39 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
+
   const handleLogin = async (event) => {
     event.preventDefault();
 
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+
+    const resp = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (resp.status === 200) {
+      router.push("/");
+    }
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
 
   return (
     <div>
@@ -26,7 +47,6 @@ const Login = () => {
               height={500}
               alt="image"
               className="hidden md:block"
-              priority
             />
           </div>
           <div className="card-body flex-1 border mt-[40%] md:mt-0">

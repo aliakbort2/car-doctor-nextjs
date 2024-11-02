@@ -1,9 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
 import { IoCartOutline, IoSearch } from "react-icons/io5";
 import navLogo from "../../../public/assets/icons/nav_logo.svg";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const session = useSession();
+
+  const handleLogout = () => {
+    signOut();
+    toast.success("Logout Successfully.");
+  };
+
   const links = (
     <>
       <li>
@@ -47,20 +58,21 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
-        <Link
-          href="/"
-          className="bg-inherit hover:bg-inherit hover:text-primary font-bold"
-        >
-          Logout
-        </Link>
-      </li>
-      <li>
-        <Link
-          href="/login"
-          className="bg-inherit hover:bg-inherit hover:text-primary font-bold"
-        >
-          Login
-        </Link>
+        {!session.data ? (
+          <Link
+            href="/login"
+            className="bg-inherit hover:bg-inherit hover:text-primary font-bold"
+          >
+            Login
+          </Link>
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="bg-inherit hover:bg-inherit hover:text-primary font-bold"
+          >
+            logout
+          </button>
+        )}
       </li>
     </>
   );
