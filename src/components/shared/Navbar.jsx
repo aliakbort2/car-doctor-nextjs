@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { signOut, useSession } from "next-auth/react";
 import { IoCartOutline, IoSearch } from "react-icons/io5";
 import navLogo from "../../../public/assets/icons/nav_logo.svg";
-import toast from "react-hot-toast";
 
 const Navbar = () => {
   const session = useSession();
@@ -58,14 +58,17 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
-        {!session.data ? (
+        {session?.status === "loading" && <h6>Loading...</h6>}
+
+        {session?.status === "unauthenticated" && (
           <Link
             href="/login"
             className="bg-inherit hover:bg-inherit hover:text-primary font-bold"
           >
             Login
           </Link>
-        ) : (
+        )}
+        {session?.status === "authenticated" && (
           <button
             onClick={handleLogout}
             className="bg-inherit hover:bg-inherit hover:text-primary font-bold"

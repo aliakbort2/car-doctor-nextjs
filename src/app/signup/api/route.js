@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 export const POST = async (request) => {
   const newUser = await request.json();
-  console.log("newUser", newUser);
+  // console.log("newUser", newUser);
 
   try {
     const db = await connectDB();

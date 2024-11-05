@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 import NextAuth from "next-auth/next";
 import { connectDB } from "@/lib/connectDB";
+import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
@@ -39,8 +41,38 @@ const handler = NextAuth({
         return currentUser;
       },
     }),
+
+    GoogleProvider({
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET,
+    }),
+
+    GitHubProvider({
+      clientId: process.env.NEXT_PUBLIC_GITHUB_ID,
+      clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET,
+    }),
   ],
-  callbacks: {},
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account.provider === "google" || account.provider === "github") {
+        const { name, email, image } = user;
+        try {
+          const db = await connectDB();
+          const userCollection = db.collection("users");
+          const userExits = await userCollection.findOne({ email });
+          if (!userExits) {
+            const res = await userCollection.insertOne(user);
+            return user;
+          } else {
+            return user;
+          }
+        } catch (error) {}
+        console.log(error);
+      } else {
+        return user;
+      }
+    },
+  },
   pages: {
     signIn: "/login",
   },

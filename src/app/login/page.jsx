@@ -3,10 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import SocialSignin from "@/components/shared/SocialSignin";
 
 const Login = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -91,21 +90,7 @@ const Login = () => {
               </div>
             </form>
             <div>
-              <p className="text-center mt-3 mb-5">Or Sign In with</p>
-              <div className="flex items-center justify-center gap-5">
-                <button className="bg-slate-100 p-2 rounded-full">
-                  <FaFacebookF className="text-xl text-blue-700" />
-                </button>
-                <button className="bg-slate-100 p-2 rounded-full">
-                  <FaLinkedinIn className="text-xl text-blue-500" />
-                </button>
-                <button className="bg-slate-100 p-2 rounded-full">
-                  <FcGoogle className="text-xl" />
-                </button>
-                <button className="bg-slate-100 p-2 rounded-full">
-                  <FaGithub className="text-xl" />
-                </button>
-              </div>
+              <SocialSignin />
             </div>
             <div className="my-4 text-center">
               {`Don't`} have an account?{" "}

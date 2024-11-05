@@ -20,8 +20,8 @@ const ServicesCard = ({ service }) => {
           Price: ${price}
         </p>
         <div>
-          <Link href={`/book/${_id}`}>
-            <button className="btn btn-primary text-white">Book Now</button>
+          <Link href={`/services/${_id}`}>
+            <button className="btn btn-primary text-white">View Details</button>
           </Link>
         </div>
       </div>

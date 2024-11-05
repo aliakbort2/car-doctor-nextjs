@@ -1,5 +1,6 @@
 "use client";
 
+import SocialSignin from "@/components/shared/SocialSignin";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -23,7 +24,7 @@ const SignUp = () => {
         "content-type": "application/json",
       },
     });
-    console.log(resp);
+    // console.log(resp);
     if (resp.status === 200) {
       event.target.reset();
     }
@@ -96,6 +97,9 @@ const SignUp = () => {
                 />
               </div>
             </form>
+            <div>
+              <SocialSignin />
+            </div>
             <p className="my-4 text-center">
               Already have an account?{" "}
               <Link className="text-primary font-bold" href="/login">
