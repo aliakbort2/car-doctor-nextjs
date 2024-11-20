@@ -17,7 +17,10 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Car Doctor Pro",
+  title: {
+    default: "Car Doctor",
+    template: "%s | Car Doctor",
+  },
   description: "Car Reaper Workshop",
 };
 

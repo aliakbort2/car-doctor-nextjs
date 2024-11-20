@@ -1,11 +1,24 @@
 import Image from "next/image";
 import React from "react";
-import detailsImage from "../../../../public/assets/images/banner/details-image.png";
 import Link from "next/link";
+import { getServicesDetails } from "@/services/getServices";
+import detailsImage from "../../../../public/assets/images/banner/details-image.png";
 
-const ServicesDetailsPage = () => {
+export const metadata = {
+  title: "Service Details",
+  description: "Service Details Page",
+};
+
+// export const getMetadata = () => {};
+
+const ServicesDetailsPage = async ({ params }) => {
+  // const services =
+
+  const details = await getServicesDetails(params.id);
+  const { title, img, price, description, facility } = details.service;
+
   return (
-    <div>
+    <div className="px-2 sm:px-2.5 md:px-3 lg:px-3">
       <div className="h-36 sm:h-48 md:h-60 lg:h-72 bg-green-600 max-w-screen-xl mx-auto rounded-xl relative">
         <Image
           src={detailsImage}
@@ -40,7 +53,43 @@ const ServicesDetailsPage = () => {
         </div>
       </div>
 
-      <p>Services Details Page</p>
+      <div className="md:flex gap-5 max-w-screen-xl mx-auto mt-12 sm:mt-16 md:mt-20 mb-10">
+        <div className="md:w-[70%]">
+          <Image
+            src={img}
+            className="w-full h-60 sm:h-72 md:h-80 lg:h-96 rounded-xl object-cover"
+            alt="image"
+            height={400}
+            width={800}
+          />
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold my-5">
+            {title}
+          </h1>
+          <p className="text-[#737373]">{description}</p>
+
+          <div className="grid grid-cols-2 gap-5 mt-5 md:mt-8">
+            {facility.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-[#F3F3F3] rounded-t-lg border-t-2 border-primary p-4 sm:p-6 md:p-8"
+              >
+                <h3 className="sm:text-lg md:text-xl font-bold mb-1 sm:mb-2 md:mb-3">
+                  {item?.name}
+                </h3>
+                <p className="text-[#737373] text-sm sm:text-base">
+                  {item.details}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="bg-green-400 border flex-1 mt-8 md:mt-0">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo,
+            odit!
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
