@@ -1,8 +1,10 @@
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { FaArrowRight } from "react-icons/fa";
 import { getServicesDetails } from "@/services/getServices";
-import detailsImage from "../../../../public/assets/images/banner/details-image.png";
+import { FaRegFileLines } from "react-icons/fa6";
+import SmallHeader from "@/components/shared/SmallHeader";
 
 export const metadata = {
   title: "Service Details",
@@ -12,46 +14,12 @@ export const metadata = {
 // export const getMetadata = () => {};
 
 const ServicesDetailsPage = async ({ params }) => {
-  // const services =
-
   const details = await getServicesDetails(params.id);
-  const { title, img, price, description, facility } = details.service;
+  const { _id, title, img, price, description, facility } = details.service;
 
   return (
     <div className="px-2 sm:px-2.5 md:px-3 lg:px-3">
-      <div className="h-36 sm:h-48 md:h-60 lg:h-72 bg-green-600 max-w-screen-xl mx-auto rounded-xl relative">
-        <Image
-          src={detailsImage}
-          className="w-full h-full rounded-xl"
-          alt="details image"
-          height={300}
-          width={1280}
-        />
-        {/* Overlay div with pointer-events-none */}
-        <div className="absolute inset-0 bg-black opacity-70 pointer-events-none rounded-xl"></div>
-
-        {/* Text inside the image */}
-        <div className="absolute inset-0 flex items-center justify-start left-5 sm:left-8 md:left-14 lg:left-16">
-          {/* Center the text inside the image */}
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Services Details
-          </h2>
-        </div>
-
-        <div className="absolute inset-0 flex items-end justify-center">
-          <p
-            className="flex bg-primary px-2.5 md:px-5 py-1.5 md:py-3 text-white text-xs sm:text-sm md:text-base"
-            style={{
-              clipPath: "polygon(10% 0, 90% 0, 100% 100%, 0% 100%)", // Triangle effect
-            }}
-          >
-            <Link href={"/"}>Home</Link> /{" "}
-            <Link href={""} className="cursor-text">
-              Service Details
-            </Link>
-          </p>
-        </div>
-      </div>
+      <SmallHeader title={"Services Details"} text={"Service Details"} />
 
       <div className="md:flex gap-5 max-w-screen-xl mx-auto mt-12 sm:mt-16 md:mt-20 mb-10">
         <div className="md:w-[70%]">
@@ -83,11 +51,75 @@ const ServicesDetailsPage = async ({ params }) => {
             ))}
           </div>
         </div>
-        <div className="bg-green-400 border flex-1 mt-8 md:mt-0">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo,
-            odit!
-          </p>
+        <div className="flex-1 mt-8 md:mt-0 min-h-fit">
+          <div className="p-5 bg-[#F3F3F3] rounded">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-5 lg:mb-8">
+              Services
+            </h2>
+            <div className="flex flex-col gap-5 ">
+              <div className="bg-white px-2 md:px-4 py-1.5 md:py-3 rounded flex justify-between items-center hover:bg-primary hover:text-white hover:transition-all cursor-pointer">
+                <h2 className="text-xl font-semibold">Full Car Repair</h2>
+                <FaArrowRight className="text-lg md:text-xl" />
+              </div>
+              <div className="bg-white px-2 md:px-4 py-1.5 md:py-3 rounded flex justify-between items-center hover:bg-primary hover:text-white hover:transition-all cursor-pointer">
+                <h2 className="text-xl font-semibold">Automatic Services</h2>
+                <FaArrowRight className="text-lg md:text-xl" />
+              </div>
+              <div className="bg-white px-2 md:px-4 py-1.5 md:py-3 rounded flex justify-between items-center hover:bg-primary hover:text-white hover:transition-all cursor-pointer">
+                <h2 className="text-xl font-semibold">Engine Oil Change</h2>
+                <FaArrowRight className="text-lg md:text-xl" />
+              </div>
+              <div className="bg-white px-2 md:px-4 py-1.5 md:py-3 rounded flex justify-between items-center hover:bg-primary hover:text-white hover:transition-all cursor-pointer">
+                <h2 className="text-xl font-semibold">Battery Charge</h2>
+                <FaArrowRight className="text-lg md:text-xl" />
+              </div>
+            </div>
+          </div>
+          <div className="p-5 bg-[#151515] mt-8 rounded">
+            <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-5 lg:mb-8">
+              Download
+            </h2>
+            <div className="flex flex-col gap-5">
+              <div className="px-2 md:px-4 py-1.5 md:py-3 rounded flex justify-between items-center cursor-pointer">
+                <div className="flex items-center gap-3">
+                  <FaRegFileLines className="text-2xl md:text-xl text-white" />
+                  <div>
+                    <h2 className="font-semibold text-white">Our Brochure</h2>
+                    <p className="text-gray-400">Download</p>
+                  </div>
+                </div>
+                <p className="bg-primary p-2 rounded">
+                  <FaArrowRight className="md:text-xl text-white" />
+                </p>
+              </div>
+
+              <div className="px-2 md:px-4 py-1.5 md:py-3 rounded flex justify-between items-center cursor-pointer">
+                <div className="flex items-center gap-3">
+                  <FaRegFileLines className="text-2xl md:text-xl text-white" />
+                  <div>
+                    <h2 className="font-semibold text-white">
+                      Company Details
+                    </h2>
+                    <p className="text-gray-400">Download</p>
+                  </div>
+                </div>
+                <p className="bg-primary p-2 rounded">
+                  <FaArrowRight className="md:text-xl text-white" />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-5 p-4">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">
+              Price: {price}
+            </h2>
+            <Link href={`/checkout/${_id}`}>
+              <button className="btn btn-primary text-white w-full mt-4">
+                Proceed Checkout
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
