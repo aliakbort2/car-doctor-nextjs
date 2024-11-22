@@ -51,7 +51,7 @@ const Navbar = () => {
       </li>
       <li>
         <Link
-          href="/bookings"
+          href="/my-bookings"
           className="bg-inherit hover:bg-inherit hover:text-primary font-bold"
         >
           My Bookings

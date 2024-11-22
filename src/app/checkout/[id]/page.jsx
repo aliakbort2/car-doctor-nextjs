@@ -1,89 +1,140 @@
+"use client";
 import SmallHeader from "@/components/shared/SmallHeader";
 import { getServicesDetails } from "@/services/getServices";
-import React from "react";
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 
-const CheckoutPage = async ({ params }) => {
-  const details = await getServicesDetails(params.id);
-  const { _id, title, img, price, description, facility } = details.service;
+const CheckoutPage = ({ params }) => {
+  const { data } = useSession();
+  const [service, setService] = useState();
+
+  const actualParams = React.use(params);
+  const { id } = actualParams;
+
+  const loadService = async () => {
+    const details = await getServicesDetails(id);
+    setService(details.service);
+  };
+
+  const { _id, title, img, price, description, facility } = service || {};
+
+  const handleBooking = async (event) => {
+    event.preventDefault();
+
+    const newBooking = {
+      email: data?.user?.email,
+      name: data?.user?.name,
+      address: event.target.address.value,
+      phone: event.target.phone.value,
+      date: event.target.date.value,
+      serviceTitle: title,
+      serviceID: _id,
+      price: price,
+    };
+
+    console.log("new booking:", newBooking);
+
+    const res = fetch("http://localhost:3000/checkout/api/new-booking", {
+      method: "POST",
+      body: JSON.stringify(newBooking),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    console.log(res);
+  };
+
+  useEffect(() => {
+    loadService();
+  }, [params]);
 
   return (
-    <div>
+    <div className="max-w-screen-xl mx-auto">
       <SmallHeader title={"Check Out"} text={"Checkout"} />
 
       <div className="my-16 py-10 bg-[#F3F3F3]">
-        <div className="max-w-screen-xl mx-auto">
-          <form className="max-w-screen-md mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">First Name</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="input input-bordered"
-                  required
-                  placeholder="First Name"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Last Name</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="input input-bordered"
-                  required
-                  placeholder="Last Name"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Your Phone</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="input input-bordered"
-                  required
-                  placeholder="Your Phone"
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Your Email</span>
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  className="input input-bordered"
-                  required
-                  placeholder="Your Email"
-                />
-              </div>
-            </div>
-            <div className="form-control mt-5">
+        <form onSubmit={handleBooking} className="max-w-screen-md mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="form-control">
               <label className="label">
-                <span className="label-text">Your Message</span>
+                <span className="label-text">First Name</span>
               </label>
-              <textarea
+              <input
                 type="text"
                 name="name"
-                className="input input-bordered textarea h-20"
+                className="input input-bordered"
                 required
-                placeholder="Your Message"
-              ></textarea>
-            </div>
-            <div className="form-control mt-6">
-              <input
-                className="btn btn-primary btn-block"
-                type="submit"
-                value="Order Confirm"
+                defaultValue={data?.user?.name}
               />
             </div>
-          </form>
-        </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Date</span>
+              </label>
+              <input
+                type="date"
+                name="date"
+                className="input input-bordered"
+                required
+                defaultValue={new Date().toISOString().split("T")[0]}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Your Email</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="input input-bordered"
+                required
+                defaultValue={data?.user?.email}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Amount</span>
+              </label>
+              <input
+                type="number"
+                name="amount"
+                readOnly
+                className="input input-bordered"
+                required
+                defaultValue={price}
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Your Phone</span>
+              </label>
+              <input
+                type="text"
+                name="phone"
+                className="input input-bordered"
+                required
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Address</span>
+              </label>
+              <input
+                type="text"
+                name="address"
+                className="input input-bordered"
+                required
+              />
+            </div>
+          </div>
+          <div className="form-control mt-6">
+            <input
+              className="btn btn-primary btn-block"
+              type="submit"
+              value="Order Confirm"
+            />
+          </div>
+        </form>
       </div>
     </div>
   );
