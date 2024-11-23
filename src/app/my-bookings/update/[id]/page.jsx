@@ -83,7 +83,7 @@ const MyBookingsUpdatePage = ({ params }) => {
                 name="date"
                 className="input input-bordered"
                 required
-                defaultValue={booking.date}
+                defaultValue={booking?.date}
               />
             </div>
             <div className="form-control">
@@ -108,7 +108,7 @@ const MyBookingsUpdatePage = ({ params }) => {
                 readOnly
                 className="input input-bordered"
                 required
-                defaultValue={booking.price}
+                defaultValue={booking?.price}
               />
             </div>
             <div className="form-control">
@@ -120,7 +120,7 @@ const MyBookingsUpdatePage = ({ params }) => {
                 name="phone"
                 className="input input-bordered"
                 required
-                defaultValue={booking.phone}
+                defaultValue={booking?.phone}
               />
             </div>
             <div className="form-control">
@@ -132,7 +132,7 @@ const MyBookingsUpdatePage = ({ params }) => {
                 name="address"
                 className="input input-bordered"
                 required
-                defaultValue={booking.address}
+                defaultValue={booking?.address}
               />
             </div>
           </div>

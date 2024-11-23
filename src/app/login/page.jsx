@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SocialSignin from "@/components/shared/SocialSignin";
 
 const Login = () => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const path = searchParams.get("redirect");
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -19,9 +21,10 @@ const Login = () => {
     const password = form.password.value;
 
     const resp = await signIn("credentials", {
-      redirect: false,
       email,
       password,
+      redirect: true,
+      callbackUrl: path ? path : "/",
     });
 
     if (resp.status === 200) {

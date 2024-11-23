@@ -2,14 +2,20 @@ import React, { useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa6";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const SocialSignin = () => {
   const router = useRouter();
   const session = useSession();
+  const searchParams = useSearchParams();
+
+  const path = searchParams.get("redirect");
 
   const handleSocialLogin = async (provider) => {
-    const resp = await signIn(provider, { redirect: false });
+    const resp = await signIn(provider, {
+      redirect: true,
+      callbackUrl: path ? path : "/",
+    });
   };
 
   useEffect(() => {
