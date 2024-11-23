@@ -3,15 +3,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import SocialSignin from "@/components/shared/SocialSignin";
 
 const Login = () => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
   const searchParams = useSearchParams();
-  const path = searchParams.get("redirect");
+  const path = searchParams?.get("redirect");
 
   const handleLogin = async (event) => {
     event.preventDefault();

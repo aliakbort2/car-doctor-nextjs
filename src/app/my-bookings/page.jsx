@@ -11,7 +11,7 @@ const MyBookingsPage = () => {
 
   const loadData = async () => {
     const resp = await fetch(
-      `http://localhost:3000/my-bookings/api/${session?.data?.user?.email}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/my-bookings/api/${session?.data?.user?.email}`
     );
     const data = await resp.json();
     setBookings(data.myBookings);
@@ -20,7 +20,7 @@ const MyBookingsPage = () => {
   // delete func
   const handleDelete = async (id) => {
     const deleted = await fetch(
-      `http://localhost:3000/my-bookings/api/booking/${id}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/my-bookings/api/booking/${id}`,
       {
         method: "DELETE",
       }
@@ -32,6 +32,10 @@ const MyBookingsPage = () => {
       loadData();
     }
   };
+
+  // useEffect(() => {
+  //   loadData();
+  // }, [session]);
 
   useEffect(() => {
     loadData();

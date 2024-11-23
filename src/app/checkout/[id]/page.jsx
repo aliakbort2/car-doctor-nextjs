@@ -35,13 +35,16 @@ const CheckoutPage = ({ params }) => {
 
     console.log("new booking:", newBooking);
 
-    const resp = await fetch("http://localhost:3000/checkout/api/new-booking", {
-      method: "POST",
-      body: JSON.stringify(newBooking),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/checkout/api/new-booking`,
+      {
+        method: "POST",
+        body: JSON.stringify(newBooking),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
 
     const response = await resp?.json();
     toast.success(response.message);

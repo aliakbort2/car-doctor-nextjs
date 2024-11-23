@@ -13,7 +13,7 @@ const MyBookingsUpdatePage = ({ params }) => {
 
   const loadBooking = async () => {
     const bookingDetail = await fetch(
-      `http://localhost:3000/my-bookings/api/booking/${id}`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/my-bookings/api/booking/${id}`
     );
 
     console.log(bookingDetail);
@@ -37,7 +37,7 @@ const MyBookingsUpdatePage = ({ params }) => {
     };
 
     const resp = await fetch(
-      `http://localhost:3000/my-bookings/api/booking/${id}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/my-bookings/api/booking/${id}`,
       {
         method: "PATCH",
         headers: {
